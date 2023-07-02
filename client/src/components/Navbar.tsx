@@ -14,9 +14,9 @@ const Navbar: React.FC<NavbarProps> = () => {
         <p>ProCoder</p>
       </Link>
       <div className="flex items-center">
-        <Link to="/auth">
-          <Button>Sign In</Button>
-        </Link>
+        {/* <Link to="/login">
+          <Button>Login</Button>
+        </Link> */}
       </div>
     </div>
   );
