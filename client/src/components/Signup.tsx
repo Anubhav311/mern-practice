@@ -12,39 +12,42 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
+import { Checkbox } from "./ui/checkbox";
 
 type LoginPageProps = {};
 
-const AuthPage: React.FC<LoginPageProps> = () => {
+const SignUpPage: React.FC<LoginPageProps> = () => {
   return (
     <div>
       <Navbar />
       <Card className="w-1/4 m-auto mt-40">
         <CardHeader>
-          <CardTitle className="mb-2">Welcome Back</CardTitle>
-          <CardDescription>Continue the grind. Go Pro Coder.</CardDescription>
+          <CardTitle className="mb-2">Create Account</CardTitle>
+          <CardDescription>
+            Start your journey of becomeing a Pro Coder
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Label>Email</Label>
           <Input className="mb-5" />
           <Label>Password</Label>
           <Input className="mb-5" />
-
-          <div className="flex justify-end">
-            <Link to="/change-password">
-              <p>Forgot Password</p>
-            </Link>
+          <div className="flex items-center space-x-2 mb-3">
+            <Checkbox id="terms" />
+            <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+              Accept Terms and Conditions
+            </Label>
           </div>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Link to="/signup">
-            <Button variant="outline">Sign Up</Button>
+          <Link to="/login">
+            <Button variant="outline">Login</Button>
           </Link>
-          <Button>Login</Button>
+          <Button>Sign Up</Button>
         </CardFooter>
       </Card>
     </div>
   );
 };
 
-export default AuthPage;
+export default SignUpPage;

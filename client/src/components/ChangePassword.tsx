@@ -15,36 +15,30 @@ import { Link } from "react-router-dom";
 
 type LoginPageProps = {};
 
-const AuthPage: React.FC<LoginPageProps> = () => {
+const ChangePassword: React.FC<LoginPageProps> = () => {
   return (
     <div>
       <Navbar />
       <Card className="w-1/4 m-auto mt-40">
         <CardHeader>
-          <CardTitle className="mb-2">Welcome Back</CardTitle>
-          <CardDescription>Continue the grind. Go Pro Coder.</CardDescription>
+          <CardTitle className="mb-2">Change Password</CardTitle>
+          <CardDescription>
+            You'll receive an email for changing password
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Label>Email</Label>
           <Input className="mb-5" />
-          <Label>Password</Label>
-          <Input className="mb-5" />
-
-          <div className="flex justify-end">
-            <Link to="/change-password">
-              <p>Forgot Password</p>
-            </Link>
-          </div>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Link to="/signup">
-            <Button variant="outline">Sign Up</Button>
+          <Link to="/login">
+            <Button variant="outline">Login</Button>
           </Link>
-          <Button>Login</Button>
+          <Button>Submit</Button>
         </CardFooter>
       </Card>
     </div>
   );
 };
 
-export default AuthPage;
+export default ChangePassword;
