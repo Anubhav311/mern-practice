@@ -1,13 +1,47 @@
 import * as React from "react";
 import { AiOutlineFullscreen, AiOutlineSetting } from "react-icons/ai";
+import Split from "react-split";
+import CodeMirror from "@uiw/react-codemirror";
+import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { javascript } from "@codemirror/lang-javascript";
+import CodeEditorFooter from "./CodeEditorFooter";
 
 interface ICodeAreaProps {}
 
 const CodeArea: React.FunctionComponent<ICodeAreaProps> = (props) => {
+  const boilerplate = `function twoSum(nums, target) {
+        // write your code here
+}`;
   return (
-    <div>
+    <div className="flex flex-col relative overflow-x-hidden">
       <PreferenceNav />
-      <div>Code Area</div>
+      <Split
+        className="h-[calc(100vh-94px)]"
+        direction="vertical"
+        sizes={[60, 40]}
+        minSize={60}
+      >
+        <div className="w-full overflow-auto">
+          <CodeMirror
+            value={boilerplate}
+            theme={vscodeDark}
+            extensions={[javascript()]}
+            style={{ fontSize: "16px" }}
+          />
+        </div>
+        <div className="w-full px-5 overflow-auto">
+          <div className="flex h-10 items-center space-x-6">
+            <div className="relative flex h-full flex-col justify-center cursor-pointer">
+              <div className="text-sm font-medium leading-5">Test Cases</div>
+            </div>
+          </div>
+
+          <div className="flex">
+            <div className="mr-2 "></div>
+          </div>
+        </div>
+      </Split>
+      <CodeEditorFooter />
     </div>
   );
 };
