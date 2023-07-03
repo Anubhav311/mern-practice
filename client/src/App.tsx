@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import { Separator } from "./components/ui/separator";
 import { Label } from "@radix-ui/react-label";
+import Propblems from "./components/Problems";
 
 export const App = () => {
   return (
@@ -17,6 +18,7 @@ export const App = () => {
         <Route path="/login" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/change-password" element={<ChangePassword />} />
+        <Route path="/problems" element={<Propblems />} />
       </Routes>
     </div>
   );

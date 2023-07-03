@@ -12,10 +12,12 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 
 type LoginPageProps = {};
 
 const AuthPage: React.FC<LoginPageProps> = () => {
+  const handleClick = () => {};
   return (
     <div>
       <Navbar />
@@ -40,7 +42,7 @@ const AuthPage: React.FC<LoginPageProps> = () => {
           <Link to="/signup">
             <Button variant="outline">Sign Up</Button>
           </Link>
-          <Button>Login</Button>
+          <Button onClick={handleClick}>Login</Button>
         </CardFooter>
       </Card>
     </div>
