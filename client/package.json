@@ -48,6 +48,7 @@
     "@babel/preset-typescript": "^7.22.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",

@@ -2,21 +2,11 @@ import * as React from "react";
 import Topbar from "./Topbar";
 import {
   Table,
-  TableBody,
   TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "./ui/table";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useParams,
-  useMatch,
-} from "react-router-dom";
 import { Skeleton } from "./ui/skeleton";
 import Problems from "./Problems";
 
@@ -24,7 +14,6 @@ export interface IProblemsProps {}
 
 export default function ProblemsTable(props: IProblemsProps) {
   const [loadingProblems, setLoadingProblems] = React.useState(false);
-  const path = "/problems";
   return (
     <div>
       <Topbar />

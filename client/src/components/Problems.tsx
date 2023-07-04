@@ -1,28 +1,7 @@
 import * as React from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useParams,
-  useMatch,
-} from "react-router-dom";
-import {
-  collection,
-  getDocs,
-  orderBy,
-  query,
-  queryEqual,
-} from "firebase/firestore";
+import { TableBody, TableCell, TableRow } from "./ui/table";
+import { Link } from "react-router-dom";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 import { DBProblems } from "@/types/problems";
 
@@ -132,9 +111,9 @@ const Problems: React.FunctionComponent<IProblemsProps> = ({
         return (
           <TableRow key={problem.id}>
             <TableCell className="font-medium">Pass</TableCell>
-            <Link to={`/problems/${problem.title}`}>
-              <TableCell>{problem.title}</TableCell>
-            </Link>
+            <TableCell>
+              <Link to={`/problems/${problem.title}`}>{problem.title}</Link>
+            </TableCell>
             <TableCell>{problem.difficulty}</TableCell>
             <TableCell className="text-right">{problem.category}</TableCell>
             <TableCell>
@@ -165,7 +144,6 @@ function useGetProblems(
       const temp: DBProblems[] = [];
       querySnapshot.forEach((doc) => {
         temp.push({ id: doc.id, ...doc.data() } as DBProblems);
-        console.log(doc.id, doc.data());
       });
       setProblems(temp);
       setLoadingProblems(false);
