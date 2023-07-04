@@ -8,7 +8,7 @@ const ProblemDescription: React.FunctionComponent<IProblemDescriptionProps> = (
   props
 ) => {
   return (
-    <div className="bg-dark-layer-1">
+    <div className="bg-dark-layer-1 h-screen">
       {/* TAB */}
       <div className="flex h-11 w-full items-center pt-2 bg-black text-black overflow-x-hidden">
         <div

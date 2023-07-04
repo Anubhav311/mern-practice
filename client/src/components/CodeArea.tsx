@@ -21,7 +21,8 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = (props) => {
         sizes={[60, 40]}
         minSize={60}
       >
-        <div className="w-full overflow-auto">
+        {/* <div className="w-full overflow-auto codearea"> */}
+        <div className="w-full overflow-auto codearea">
           <CodeMirror
             value={boilerplate}
             theme={vscodeDark}
