@@ -1,5 +1,4 @@
 import * as React from "react";
-import Topbar from "./Topbar";
 import {
   Table,
   TableBody,
@@ -109,43 +108,33 @@ export const problems: Problem[] = [
     videoId: "",
   },
 ];
-export interface IProblemsProps {}
 
-export default function Problems(props: IProblemsProps) {
-  const path = "/problems";
-  return (
-    <div>
-      <Topbar />
-      <h1>Problems for Pro Coders</h1>
-      <Table className="w-4/6 m-auto">
-        <TableCaption>A list of your recent invoices.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[100px]">Status</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead>Difficulty</TableHead>
-            <TableHead className="text-right">Category</TableHead>
-            <TableHead>Solution</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {problems.map((problem) => {
-            return (
-              <TableRow key={problem.id}>
-                <TableCell className="font-medium">Pass</TableCell>
-                <Link to={`/problems/${problem.title}`}>
-                  <TableCell>{problem.title}</TableCell>
-                </Link>
-                <TableCell>{problem.difficulty}</TableCell>
-                <TableCell className="text-right">{problem.category}</TableCell>
-                <TableCell>
-                  {problem.videoId ? <p>Video Link</p> : <p>Coming Soon</p>}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </div>
-  );
+interface IProblemsProps {
+  setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const Problems: React.FunctionComponent<IProblemsProps> = ({
+  setLoadingProblems,
+}) => {
+  return (
+    <TableBody>
+      {problems.map((problem) => {
+        return (
+          <TableRow key={problem.id}>
+            <TableCell className="font-medium">Pass</TableCell>
+            <Link to={`/problems/${problem.title}`}>
+              <TableCell>{problem.title}</TableCell>
+            </Link>
+            <TableCell>{problem.difficulty}</TableCell>
+            <TableCell className="text-right">{problem.category}</TableCell>
+            <TableCell>
+              {problem.videoId ? <p>Video Link</p> : <p>Coming Soon</p>}
+            </TableCell>
+          </TableRow>
+        );
+      })}
+    </TableBody>
+  );
+};
+
+export default Problems;

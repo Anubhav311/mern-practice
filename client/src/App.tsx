@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./components/ui/button";
 import { Separator } from "./components/ui/separator";
 import { Label } from "@radix-ui/react-label";
-import Propblems from "./components/Problems";
+import ProblemsTable from "./components/ProblemsTable";
 import WorkSpace from "./components/Workspace";
 
 export const App = () => {
@@ -19,7 +19,7 @@ export const App = () => {
         <Route path="/login" element={<AuthPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/problems" element={<Propblems />} />
+        <Route path="/problems" element={<ProblemsTable />} />
         <Route path="/problems/:problemId" element={<WorkSpace />} />
       </Routes>
     </div>
