@@ -16,6 +16,8 @@ import {
   useParams,
   useMatch,
 } from "react-router-dom";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { firestore } from "../firebase/firebase";
 
 export type Problem = {
   id: string;
@@ -116,6 +118,7 @@ interface IProblemsProps {
 const Problems: React.FunctionComponent<IProblemsProps> = ({
   setLoadingProblems,
 }) => {
+  const problemss = useGetProblems(setLoadingProblems);
   return (
     <TableBody>
       {problems.map((problem) => {
@@ -138,3 +141,24 @@ const Problems: React.FunctionComponent<IProblemsProps> = ({
 };
 
 export default Problems;
+
+function useGetProblems(
+  setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  const [problems, setProblems] = React.useState([]);
+
+  React.useEffect(() => {
+    const getProblems = async () => {
+      setLoadingProblems(true);
+      const q = query(
+        collection(firestore, "problems"),
+        orderBy("order", "asc")
+      );
+      const querySnapshot = await getDocs(q);
+      console.log(querySnapshot);
+    };
+
+    getProblems();
+  });
+  return problems;
+}
