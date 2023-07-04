@@ -24,6 +24,7 @@ import {
   queryEqual,
 } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
+import { DBProblems } from "@/types/problems";
 
 export type Problem = {
   id: string;
@@ -151,7 +152,7 @@ export default Problems;
 function useGetProblems(
   setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  const [problems, setProblems] = React.useState([]);
+  const [problems, setProblems] = React.useState<DBProblems[]>([]);
 
   React.useEffect(() => {
     const getProblems = async () => {
@@ -161,9 +162,9 @@ function useGetProblems(
         orderBy("order", "asc")
       );
       const querySnapshot = await getDocs(q);
-      const temp = [];
+      const temp: DBProblems[] = [];
       querySnapshot.forEach((doc) => {
-        temp.push({ id: doc.id, ...doc.data() });
+        temp.push({ id: doc.id, ...doc.data() } as DBProblems);
         console.log(doc.id, doc.data());
       });
       setProblems(temp);
