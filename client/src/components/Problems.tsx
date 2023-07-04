@@ -16,7 +16,13 @@ import {
   useParams,
   useMatch,
 } from "react-router-dom";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  queryEqual,
+} from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 
 export type Problem = {
@@ -121,7 +127,7 @@ const Problems: React.FunctionComponent<IProblemsProps> = ({
   const problemss = useGetProblems(setLoadingProblems);
   return (
     <TableBody>
-      {problems.map((problem) => {
+      {problemss.map((problem) => {
         return (
           <TableRow key={problem.id}>
             <TableCell className="font-medium">Pass</TableCell>
@@ -155,10 +161,16 @@ function useGetProblems(
         orderBy("order", "asc")
       );
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot);
+      const temp = [];
+      querySnapshot.forEach((doc) => {
+        temp.push({ id: doc.id, ...doc.data() });
+        console.log(doc.id, doc.data());
+      });
+      setProblems(temp);
+      setLoadingProblems(false);
     };
 
     getProblems();
-  });
+  }, [setLoadingProblems]);
   return problems;
 }
