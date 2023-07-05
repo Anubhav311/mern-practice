@@ -1,12 +1,6 @@
 import * as React from "react";
 import Topbar from "./Topbar";
-import {
-  Table,
-  TableCaption,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
+import { Table, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Skeleton } from "./ui/skeleton";
 import Problems from "./Problems";
 
@@ -26,7 +20,6 @@ export default function ProblemsTable(props: IProblemsProps) {
         </div>
       )}
       <Table className="w-4/6 m-auto">
-        <TableCaption>A list of your recent invoices.</TableCaption>
         {!loadingProblems && (
           <TableHeader>
             <TableRow>
