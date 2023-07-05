@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Navbar from "./Navbar";
 import {
@@ -12,7 +12,7 @@ import {
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
-import { Link, Router } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Checkbox } from "./ui/checkbox";
 import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +30,8 @@ const SignUpPage: React.FC<LoginPageProps> = () => {
   };
 
   const handleSignup = async (e: MouseEventHandler<HTMLButtonElement>) => {
+    if (!inputs.email || !inputs.password)
+      return alert("Please fill all fields");
     try {
       const newUser = await createUserWithEmailAndPassword(
         inputs.email,
@@ -40,9 +42,12 @@ const SignUpPage: React.FC<LoginPageProps> = () => {
     } catch (error: any) {
       alert(error.message);
     }
-    console.log(inputs);
   };
-  console.log(inputs);
+
+  useEffect(() => {
+    if (error) alert(error.message);
+  }, [error]);
+
   return (
     <div>
       <Navbar />
@@ -73,7 +78,9 @@ const SignUpPage: React.FC<LoginPageProps> = () => {
           <Link to="/login">
             <Button variant="outline">Login</Button>
           </Link>
-          <Button onClick={handleSignup}>Sign Up</Button>
+          <Button onClick={handleSignup}>
+            {loading ? "Signing Up..." : "Sign Up"}
+          </Button>
         </CardFooter>
       </Card>
     </div>
