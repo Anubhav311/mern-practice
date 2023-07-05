@@ -13,30 +13,31 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { auth } from "..//firebase/firebase";
+import { auth } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 
 type LoginPageProps = {};
 
 const AuthPage: React.FC<LoginPageProps> = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
-  const navigate = useNavigate();
-
+  console.log(user);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
   const handleClick = async (e: MouseEventHandler<HTMLButtonElement>) => {
     if (!inputs.email || !inputs.password)
       return alert("Please fill all fields");
     try {
-      const user = await signInWithEmailAndPassword(
+      const newUser = await signInWithEmailAndPassword(
         inputs.email,
         inputs.password
       );
-      if (!user) return;
+      console.log("newUser: ", newUser);
+      if (!newUser) return;
       navigate("/");
     } catch (error: any) {
       alert(error.message);
@@ -47,8 +48,6 @@ const AuthPage: React.FC<LoginPageProps> = () => {
     if (error) alert(error.message);
   }, [error]);
 
-  console.log(inputs);
-  console.log(user);
   return (
     <div>
       <Navbar />
