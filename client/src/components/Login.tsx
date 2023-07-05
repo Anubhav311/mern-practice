@@ -1,4 +1,4 @@
-import React, { useState, MouseEventHandler } from "react";
+import React, { useState, MouseEventHandler, useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import Navbar from "./Navbar";
 import {
@@ -42,6 +42,12 @@ const AuthPage: React.FC<LoginPageProps> = () => {
       alert(error.message);
     }
   };
+
+  useEffect(() => {
+    if (error) alert(error.message);
+  }, [error]);
+
+  console.log(inputs);
   console.log(user);
   return (
     <div>
