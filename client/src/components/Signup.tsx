@@ -1,5 +1,8 @@
 import React, { MouseEventHandler, useEffect, useState } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import Navbar from "./Navbar";
 import {
   Card,
@@ -21,9 +24,14 @@ type LoginPageProps = {};
 
 const SignUpPage: React.FC<LoginPageProps> = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [authUser, load, err] = useAuthState(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authUser) navigate("/");
+  }, [authUser]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));

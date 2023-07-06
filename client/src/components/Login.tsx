@@ -23,14 +23,15 @@ type LoginPageProps = {};
 
 const AuthPage: React.FC<LoginPageProps> = () => {
   const [inputs, setInputs] = useState({ email: "", password: "" });
-  const [user, load, err] = useAuthState(auth);
+  const [authUser, load, err] = useAuthState(auth);
   const navigate = useNavigate();
   const [signInWithEmailAndPassword, loggedInUser, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
   useEffect(() => {
-    if (user) navigate("/");
-  }, [user]);
+    if (authUser) navigate("/");
+  }, [authUser]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -43,7 +44,6 @@ const AuthPage: React.FC<LoginPageProps> = () => {
         inputs.email,
         inputs.password
       );
-      console.log("newUser: ", newUser);
       if (!newUser) return;
       navigate("/");
     } catch (error: any) {
