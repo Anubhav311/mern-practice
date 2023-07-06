@@ -28,7 +28,14 @@ export const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/problems/:problemId" element={<WorkSpace />} />
+        <Route
+          path="/problems/:problemId"
+          element={
+            <ProtectedRoute>
+              <WorkSpace />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );
