@@ -112,7 +112,7 @@ const Problems: React.FunctionComponent<IProblemsProps> = ({
           <TableRow key={problem.id}>
             <TableCell className="font-medium">Pass</TableCell>
             <TableCell>
-              <Link to={`/problems/${problem.title}`}>{problem.title}</Link>
+              <Link to={`/problems/${problem.id}`}>{problem.title}</Link>
             </TableCell>
             <TableCell>{problem.difficulty}</TableCell>
             <TableCell className="text-right">{problem.category}</TableCell>

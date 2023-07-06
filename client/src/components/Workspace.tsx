@@ -10,11 +10,11 @@ interface ProblemParams {
 }
 
 const WorkSpace: React.FunctionComponent<IWorkSpaceProps> = (props) => {
-  const { problemId } = useParams();
-
+  const { problemId } = useParams<string>();
+  console.log(problemId);
   return (
     <Split className="split" minSize={0}>
-      <ProblemDescription />
+      <ProblemDescription problemId={problemId} />
       <CodeArea />
     </Split>
   );
