@@ -48,6 +48,7 @@
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@types/firebase": "^3.2.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "babel-loader": "^9.1.2",
