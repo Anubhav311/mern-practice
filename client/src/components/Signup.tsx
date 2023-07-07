@@ -17,8 +17,9 @@ import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { Checkbox } from "./ui/checkbox";
-import { auth } from "../firebase/firebase";
+import { auth, firestore } from "../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
 
 type LoginPageProps = {};
 
@@ -46,6 +47,17 @@ const SignUpPage: React.FC<LoginPageProps> = () => {
         inputs.password
       );
       if (!newUser) return;
+      const userData = {
+        uid: newUser.user.uid,
+        email: newUser.user.email,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        likedProblems: [],
+        dislikedProblems: [],
+        solvedProblems: [],
+        starredProblems: [],
+      };
+      await setDoc(doc(firestore, "users", newUser.user.uid), userData);
       navigate("/");
     } catch (error: any) {
       alert(error.message);
