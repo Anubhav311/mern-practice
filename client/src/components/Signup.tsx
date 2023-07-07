@@ -58,7 +58,7 @@ const SignUpPage: React.FC<LoginPageProps> = () => {
         starredProblems: [],
       };
       await setDoc(doc(firestore, "users", newUser.user.uid), userData);
-      navigate("/");
+      navigate("/problems");
     } catch (error: any) {
       alert(error.message);
     }

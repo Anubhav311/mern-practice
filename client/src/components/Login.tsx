@@ -45,7 +45,7 @@ const AuthPage: React.FC<LoginPageProps> = () => {
         inputs.password
       );
       if (!newUser) return;
-      navigate("/");
+      navigate("/problems");
     } catch (error: any) {
       alert(error.message);
     }
