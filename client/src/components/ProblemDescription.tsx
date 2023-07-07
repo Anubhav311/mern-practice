@@ -7,13 +7,14 @@ import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
 interface IProblemDescriptionProps {
-  problemId: string;
+  problem: DBProblems | null;
+  loading: boolean;
 }
 
 const ProblemDescription: React.FunctionComponent<IProblemDescriptionProps> = ({
-  problemId,
+  problem,
+  loading,
 }) => {
-  const { problem, loading, problemDifficultyClass } = useGetProblem(problemId);
   return (
     <div className="bg-dark-layer-1 h-screen">
       {/* TAB */}
@@ -152,36 +153,3 @@ const ProblemDescription: React.FunctionComponent<IProblemDescriptionProps> = ({
 };
 
 export default ProblemDescription;
-
-function useGetProblem(problemId: string) {
-  const [problem, setProblem] = useState<DBProblems | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [problemDifficultyClass, setProblemDifficultyClass] =
-    useState<string>("");
-
-  useEffect(() => {
-    const getProblem = async () => {
-      setLoading(true);
-
-      const docRef = doc(firestore, "problems", problemId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const problem = docSnap.data();
-        setProblem({ id: docSnap.id, ...problem } as DBProblems);
-
-        setProblemDifficultyClass(
-          problem.difficulty == "easy"
-            ? "bg-olive text-olive"
-            : problem.difficulty == "medium"
-            ? "bg-dark-yellow text-dark-yellow"
-            : "bg-dark-pink text-dark-pink"
-        );
-
-        setLoading(false);
-      }
-    };
-    getProblem();
-  }, [problemId]);
-  return { problem, loading, problemDifficultyClass };
-}

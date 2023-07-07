@@ -9,9 +9,17 @@ import CodeEditorFooter from "./CodeEditorFooter";
 interface ICodeAreaProps {}
 
 const CodeArea: React.FunctionComponent<ICodeAreaProps> = (props) => {
+  const [userCode, setUserCode] = React.useState<string>("");
   const boilerplate = `function twoSum(nums, target) {
         // write your code here
 }`;
+  const handleSubmit = () => {
+    alert("submit");
+  };
+
+  const handleChange = (value: string) => {
+    console.log(value);
+  };
   return (
     <div className="flex flex-col relative overflow-x-hidden">
       <PreferenceNav />
@@ -26,6 +34,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = (props) => {
           <CodeMirror
             value={boilerplate}
             theme={vscodeDark}
+            onChange={handleChange}
             extensions={[javascript()]}
             style={{ fontSize: "16px" }}
           />
@@ -42,7 +51,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = (props) => {
           </div>
         </div>
       </Split>
-      <CodeEditorFooter />
+      <CodeEditorFooter handleSubmit={handleSubmit} />
     </div>
   );
 };
