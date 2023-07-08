@@ -5,20 +5,26 @@ import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeEditorFooter from "./CodeEditorFooter";
+import { DBProblems } from "../types/problems";
 
-interface ICodeAreaProps {}
+interface ICodeAreaProps {
+  problem: DBProblems | null;
+  loading: boolean;
+}
 
-const CodeArea: React.FunctionComponent<ICodeAreaProps> = (props) => {
+const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
+  problem,
+  loading,
+}) => {
   const [userCode, setUserCode] = React.useState<string>("");
-  const boilerplate = `function twoSum(nums, target) {
-        // write your code here
-}`;
+  const boilerPlate = problem?.boilerPlate.replaceAll("_n", "\n");
+
   const handleSubmit = () => {
     alert("submit");
   };
 
   const handleChange = (value: string) => {
-    console.log(value);
+    console.log(value.replaceAll("\n", "zzz"));
   };
   return (
     <div className="flex flex-col relative overflow-x-hidden">
@@ -32,7 +38,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = (props) => {
         {/* <div className="w-full overflow-auto codearea"> */}
         <div className="w-full overflow-auto codearea">
           <CodeMirror
-            value={boilerplate}
+            value={boilerPlate}
             theme={vscodeDark}
             onChange={handleChange}
             extensions={[javascript()]}

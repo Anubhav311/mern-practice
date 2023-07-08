@@ -8,4 +8,5 @@ export type DBProblems = {
   order: number;
   videoId?: string;
   link?: string;
+  boilerPlate: string;
 };

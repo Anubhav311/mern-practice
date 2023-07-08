@@ -22,7 +22,7 @@ const WorkSpace: React.FunctionComponent<IWorkSpaceProps> = (props) => {
   return (
     <Split className="split" minSize={0}>
       <ProblemDescription problem={problem} loading={loading} />
-      <CodeArea />
+      <CodeArea problem={problem} loading={loading} />
     </Split>
   );
 };
