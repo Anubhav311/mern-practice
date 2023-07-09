@@ -42,7 +42,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
 
   const handleChange = (value: string) => {
     setUserCode(value);
-    console.log(value);
+    localStorage.setItem(`code-${problem?.id}`, JSON.stringify(value));
   };
 
   return (
