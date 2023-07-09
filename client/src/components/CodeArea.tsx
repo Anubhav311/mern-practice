@@ -6,6 +6,9 @@ import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeEditorFooter from "./CodeEditorFooter";
 import { DBProblems } from "../types/problems";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/firebase";
+import { problems } from "../problems/index";
 
 interface ICodeAreaProps {
   problem: DBProblems | null;
@@ -18,13 +21,28 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
 }) => {
   const [userCode, setUserCode] = React.useState<string>("");
   const boilerPlate = problem?.boilerPlate.replaceAll("_n", "\n");
+  const [user] = useAuthState(auth);
 
   const handleSubmit = () => {
-    alert("submit");
+    if (!user) {
+      alert("Please login first");
+      return;
+    }
+    try {
+      const cb = new Function(`return ${userCode}`)();
+      const success = problems[problem?.id as string].handlerFunction(cb);
+
+      if (success) {
+        alert("Congrats!!! All tests passed!!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleChange = (value: string) => {
-    console.log(value.replaceAll("\n", "zzz"));
+    setUserCode(value);
+    console.log(value);
   };
 
   return (
