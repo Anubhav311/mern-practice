@@ -1,5 +1,5 @@
-import * as React from "react";
-import { AiOutlineFullscreen, AiOutlineSetting } from "react-icons/ai";
+import React, { useEffect } from "react";
+import { AiOutlineSetting } from "react-icons/ai";
 import Split from "react-split";
 import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
@@ -45,6 +45,15 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
     localStorage.setItem(`code-${problem?.id}`, JSON.stringify(value));
   };
 
+  useEffect(() => {
+    const code = localStorage.getItem(`code-${problem?.id}`);
+    if (user) {
+      setUserCode(
+        code ? JSON.parse(code) : problem?.boilerPlate.replaceAll("_n", "\n")
+      );
+    }
+  }, [user, problem?.boilerPlate, problem?.id]);
+
   return (
     <div className="flex flex-col relative overflow-x-hidden">
       <PreferenceNav />
@@ -54,10 +63,9 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
         sizes={[60, 40]}
         minSize={60}
       >
-        {/* <div className="w-full overflow-auto codearea"> */}
         <div className="w-full overflow-auto codearea">
           <CodeMirror
-            value={boilerPlate}
+            value={userCode}
             theme={vscodeDark}
             onChange={handleChange}
             extensions={[javascript()]}
