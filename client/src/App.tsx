@@ -42,6 +42,8 @@ export const App = () => {
 };
 
 const Home = () => {
+  console.log("its working hell");
+
   return (
     <div className="h-screen flex flex-col justify-between">
       <div>

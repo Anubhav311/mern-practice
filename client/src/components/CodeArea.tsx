@@ -26,6 +26,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
   const handleChange = (value: string) => {
     console.log(value.replaceAll("\n", "zzz"));
   };
+
   return (
     <div className="flex flex-col relative overflow-x-hidden">
       <PreferenceNav />
