@@ -5,7 +5,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeEditorFooter from "./CodeEditorFooter";
-import { DBProblems } from "../types/problems";
+import { DBProblems, Problem as localProblem } from "../types/problems";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 import { problems } from "../problems/index";
@@ -29,7 +29,10 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
       return;
     }
     try {
-      const cb = new Function(`return ${userCode}`)();
+      const sanitisedCode = userCode.slice(
+        userCode.indexOf(problems[problem?.id as string].starterFunctionName)
+      );
+      const cb = new Function(`return ${sanitisedCode}`)();
       const success = problems[problem?.id as string].handlerFunction(cb);
 
       if (success) {
