@@ -17,7 +17,13 @@ export type Problem = {
   constraints: string;
   order: number;
   starterCode: string;
-  handlerFunction: (fn: any, input: any, output: any) => boolean;
+  handlerFunction: (
+    fn: any,
+    input: any,
+    inputCount: number,
+    output: any,
+    testCasesCount: number
+  ) => boolean;
   starterFunctionName: string;
 };
 
@@ -26,33 +32,24 @@ const starterCodeTwoSum = `function twoSum(nums, target) {
 };`;
 
 // checks if the code is correct or not
-const handlerTwoSum = (fn: any, input: any, output: any) => {
+const handlerTwoSum = (
+  fn: any,
+  input: any,
+  inputCount: number,
+  output: any,
+  testCasesCount: number
+) => {
   try {
-    // const nums = [
-    //   [7, 2, 3, 4],
-    //   [3, 2, 4],
-    //   [3, 3],
-    // ];
+    for (let i = 0; i < testCasesCount; i++) {
+      const inputIndex1 = i * inputCount;
 
-    // const targets = [9, 6, 6];
-    // const answers = [
-    //   [0, 1],
-    //   [1, 2],
-    //   [0, 1],
-    // ];
+      const inp1 = JSON.parse(input[inputIndex1]);
+      const inp2 = JSON.parse(input[inputIndex1 + 1]);
+      const outp = JSON.parse(output[i]);
 
-    // for (let i = 0; i < nums.length; i++) {
-    //   const result = fn(nums[i], targets[i]);
-    //   assert.deepStrictEqual(result, answers[i]);
-    // }
-    // for (let i = 0; i < nums.length; i++) {
-    const inp1 = JSON.parse(input[0]);
-    const inp2 = JSON.parse(input[1]);
-    const outp = JSON.parse(output);
-    const result = fn(inp1, inp2);
-    console.log(inp1, inp2, outp, result);
-    assert.deepStrictEqual(result, outp);
-    // }
+      const result = fn(inp1, inp2);
+      assert.deepStrictEqual(result, outp);
+    }
 
     return true;
   } catch (error: any) {

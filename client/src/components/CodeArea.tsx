@@ -28,19 +28,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
   const [userCode, setUserCode] = React.useState<string>("");
   const [user] = useAuthState(auth);
   const { testCases, loadingTest } = useGetTestCases("testcaseId");
-  console.log(!loadingTest && testCases?.input);
-  const nums = [
-    [7, 2, 3, 4],
-    [3, 2, 4],
-    [3, 3],
-  ];
 
-  const targets = [9, 6, 6];
-  const answers = [
-    [0, 1],
-    [1, 2],
-    [0, 1],
-  ];
   const handleSubmit = () => {
     if (!user) {
       alert("Please login first");
@@ -53,8 +41,10 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
       const cb = new Function(`return ${sanitisedCode}`)();
       const success = problems[problem?.id as string].handlerFunction(
         cb,
-        [testCases?.input[0], testCases?.input[1]],
-        testCases?.output
+        testCases?.input,
+        testCases?.inputCount,
+        testCases?.output,
+        testCases?.testCasesCount
       );
 
       if (success) {

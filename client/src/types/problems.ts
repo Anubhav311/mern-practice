@@ -31,14 +31,23 @@ export type Problem = {
   constraints: string;
   order: number;
   starterCode: string;
-  handlerFunction: (fn: any, input: any, output: any) => boolean;
+  handlerFunction: (
+    fn: any,
+    input: any,
+    inputCount: number,
+    output: any,
+    testCasesCount: number
+  ) => boolean;
   starterFunctionName: string;
 };
 
 export type TestCase = {
   id: string;
   input: Input[];
-  output: string;
+  output: Output[];
+  inputCount: number;
+  testCasesCount: number;
 };
 
 export type Input = string;
+export type Output = string;
