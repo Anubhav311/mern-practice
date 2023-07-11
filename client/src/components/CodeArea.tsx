@@ -20,7 +20,6 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
   loading,
 }) => {
   const [userCode, setUserCode] = React.useState<string>("");
-  const boilerPlate = problem?.boilerPlate.replaceAll("_n", "\n");
   const [user] = useAuthState(auth);
 
   const handleSubmit = () => {

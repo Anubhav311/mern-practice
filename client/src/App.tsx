@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AuthPage from "./components/Login";
 import SignUpPage from "./components/Signup";
@@ -11,6 +11,8 @@ import { Label } from "@radix-ui/react-label";
 import ProblemsTable from "./components/ProblemsTable";
 import WorkSpace from "./components/Workspace";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase/firebase";
 
 export const App = () => {
   return (
@@ -42,8 +44,12 @@ export const App = () => {
 };
 
 const Home = () => {
-  console.log("its working hell");
+  const navigate = useNavigate();
+  const [authUser, load, err] = useAuthState(auth);
 
+  useEffect(() => {
+    if (authUser) navigate("/problems");
+  }, [authUser]);
   return (
     <div className="h-screen flex flex-col justify-between">
       <div>

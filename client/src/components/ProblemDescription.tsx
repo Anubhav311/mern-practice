@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
+import parse from "html-react-parser";
 
 interface IProblemDescriptionProps {
   problem: DBProblems | null;
@@ -36,7 +37,6 @@ const ProblemDescription: React.FunctionComponent<IProblemDescriptionProps> = ({
             <div className="w-full">
               <div className="flex space-x-4">
                 <div className="flex-1 mr-2 text-lg text-black font-medium">
-                  1. Two Sum
                   {problem.title}
                 </div>
               </div>
@@ -44,26 +44,26 @@ const ProblemDescription: React.FunctionComponent<IProblemDescriptionProps> = ({
                 <div
                   className={`text-olive bg-olive inline-block rounded-[21px] bg-opacity-[.15] px-2.5 py-1 text-xs font-medium capitalize `}
                 >
-                  Easy
+                  {problem.difficulty}
                 </div>
-                <div className="rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s">
+                {/* <div className="rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s">
                   <BsCheck2Circle />
                 </div>
                 <div className="flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-dark-gray-6">
                   <AiFillLike />
-                  <span className="text-xs">120</span>
+                  <span className="text-xs">{problem.likes}</span>
                 </div>
                 <div className="flex items-center cursor-pointer hover:bg-dark-fill-3 space-x-1 rounded p-[3px]  ml-4 text-lg transition-colors duration-200 text-green-s text-dark-gray-6">
                   <AiFillDislike />
-                  <span className="text-xs">2</span>
+                  <span className="text-xs">{problem.dislikes}</span>
                 </div>
                 <div className="cursor-pointer hover:bg-dark-fill-3  rounded p-[3px]  ml-4 text-xl transition-colors duration-200 text-green-s text-dark-gray-6 ">
                   <TiStarOutline />
-                </div>
+                </div> */}
               </div>
 
               {/* Problem Statement(paragraphs) */}
-              <div className="text-black text-sm">
+              {/* <div className="text-black text-sm">
                 <p className="mt-3">
                   Given an array of integers <code>nums</code> and an integer{" "}
                   <code>target</code>, return
@@ -78,7 +78,8 @@ const ProblemDescription: React.FunctionComponent<IProblemDescriptionProps> = ({
                   thesame element twice.
                 </p>
                 <p className="mt-3">You can return the answer in any order.</p>
-              </div>
+              </div> */}
+              {parse(problem.problemStatement)}
 
               {/* Examples */}
               <div className="mt-4">

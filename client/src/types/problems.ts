@@ -9,6 +9,7 @@ export type DBProblems = {
   videoId?: string;
   link?: string;
   boilerPlate: string;
+  problemStatement: string;
 };
 
 export type Example = {
