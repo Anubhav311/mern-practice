@@ -43,7 +43,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
         testCases?.inputCount,
         testCases?.testCasesCount
       );
-      console.log("Success: ", success);
+
       if (success.success) {
         setTestResult(success.message);
       } else {

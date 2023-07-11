@@ -4,9 +4,10 @@ import { reverseLinkedList } from "./reverse-linked-list";
 import { search2DMatrix } from "./search-2d-matrix";
 import { twoSum } from "./two-sum";
 import { validParentheses } from "./valid-parentheses";
+import { SubmitHandler } from "../types/problems";
 
 interface ProblemMap {
-  [key: string]: DBProblems;
+  [key: string]: SubmitHandler;
 }
 
 export const problems: ProblemMap = {

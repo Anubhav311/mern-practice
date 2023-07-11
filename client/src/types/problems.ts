@@ -24,8 +24,8 @@ export type DBProblems = {
     fn: any,
     input: any,
     output: any,
-    inputCount?: number,
-    testCasesCount?: number
+    inputCount: number,
+    testCasesCount: number
   ) => TestResult;
   starterFunctionName: string;
 };
@@ -45,3 +45,14 @@ export type TestCase = {
 
 export type Input = string;
 export type Output = string;
+
+export type SubmitHandler = {
+  handlerFunction: (
+    fn: any,
+    input: any,
+    output: any,
+    inputCount?: number,
+    testCasesCount?: number
+  ) => TestResult;
+  starterFunctionName: string;
+};
