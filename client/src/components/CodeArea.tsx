@@ -5,17 +5,12 @@ import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeEditorFooter from "./CodeEditorFooter";
-import {
-  DBProblems,
-  TestCase,
-  Problem as localProblem,
-} from "../types/problems";
+import { DBProblems, TestCase } from "../types/problems";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 import { problems } from "../problems/index";
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
-import { TestResult } from "../problems/two-sum";
 
 interface ICodeAreaProps {
   problem: DBProblems | null;
@@ -28,7 +23,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
 }) => {
   const [userCode, setUserCode] = React.useState<string>("");
   const [user] = useAuthState(auth);
-  const { testCases, loadingTest } = useGetTestCases("testcaseId");
+  const { testCases, loadingTest } = useGetTestCases(problem?.id);
   const [testResult, setTestResult] = useState("");
 
   const handleSubmit = () => {
@@ -44,8 +39,8 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
       const success = problems[problem?.id as string].handlerFunction(
         cb,
         testCases?.input,
-        testCases?.inputCount,
         testCases?.output,
+        testCases?.inputCount,
         testCases?.testCasesCount
       );
       console.log("Success: ", success);
@@ -136,35 +131,38 @@ const PreferenceNav: React.FunctionComponent<IPreferenceNavProps> = (props) => {
   );
 };
 
-function useGetTestCases(testCaseId: string) {
+function useGetTestCases(problemId: string | undefined) {
   const [testCases, setTestCases] = useState<TestCase | null>(null);
   const [loadingTest, setLoading] = useState<boolean>(true);
+  const testCaseId = problemId + "-tc1";
   // const [problemDifficultyClass, setProblemDifficultyClass] =
   //   useState<string>("");
 
   useEffect(() => {
-    const getProblem = async () => {
-      setLoading(true);
+    if (problemId != undefined) {
+      const getProblem = async () => {
+        setLoading(true);
 
-      const docRef = doc(firestore, "testCases", "two-sum-tc1");
-      const docSnap = await getDoc(docRef);
+        const docRef = doc(firestore, "testCases", testCaseId);
+        const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        const testCases = docSnap.data();
-        setTestCases({ id: docSnap.id, ...testCases } as TestCase);
+        if (docSnap.exists()) {
+          const testCases = docSnap.data();
+          setTestCases({ id: docSnap.id, ...testCases } as TestCase);
 
-        // setProblemDifficultyClass(
-        //   problem.difficulty == "easy"
-        //     ? "bg-olive text-olive"
-        //     : problem.difficulty == "medium"
-        //     ? "bg-dark-yellow text-dark-yellow"
-        //     : "bg-dark-pink text-dark-pink"
-        // );
+          // setProblemDifficultyClass(
+          //   problem.difficulty == "easy"
+          //     ? "bg-olive text-olive"
+          //     : problem.difficulty == "medium"
+          //     ? "bg-dark-yellow text-dark-yellow"
+          //     : "bg-dark-pink text-dark-pink"
+          // );
 
-        setLoading(false);
-      }
-    };
-    getProblem();
-  }, [testCaseId]);
+          setLoading(false);
+        }
+      };
+      getProblem();
+    }
+  }, [testCaseId, problemId]);
   return { testCases, loadingTest };
 }

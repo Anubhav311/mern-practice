@@ -1,30 +1,5 @@
 import assert from "assert";
-
-export type Example = {
-  id: number;
-  input: string;
-  output: string;
-  explanation?: string;
-  img?: string;
-};
-
-export type Problem = {
-  id: string;
-  title: string;
-  problemStatement: string;
-  examples: Example[];
-  constraints: string;
-  order: number;
-  starterCode: string;
-  handlerFunction: (
-    fn: any,
-    input: any,
-    inputCount: number,
-    output: any,
-    testCasesCount: number
-  ) => TestResult;
-  starterFunctionName: string;
-};
+import { DBProblems } from "../types/problems";
 
 const starterCodeTwoSum = `function twoSum(nums, target) {
     // write your code here
@@ -39,8 +14,8 @@ export type TestResult = {
 const handlerTwoSum = (
   fn: any,
   input: any,
-  inputCount: number,
   output: any,
+  inputCount: number,
   testCasesCount: number
 ): TestResult => {
   try {
@@ -66,9 +41,13 @@ const handlerTwoSum = (
   }
 };
 
-export const twoSum: Problem = {
+export const twoSum: DBProblems = {
   id: "two-sum",
   title: "1. Two Sum",
+  category: "Array",
+  likes: 2,
+  dislikes: 5,
+  difficulty: "Easy",
   problemStatement: `<p className="mt-3">
   Given an array of integers <code>nums</code> and an integer{" "}
   <code>target</code>, return
@@ -105,7 +84,7 @@ export const twoSum: Problem = {
   <strong>Only one valid answer exists.</strong>
 </li>`,
   handlerFunction: handlerTwoSum,
-  starterCode: starterCodeTwoSum,
+  boilerPlate: starterCodeTwoSum,
   order: 1,
   starterFunctionName: "function twoSum(",
 };

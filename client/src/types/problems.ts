@@ -20,28 +20,17 @@ export type DBProblems = {
   problemStatement: string;
   examples: Example[];
   constraints: string;
-};
-
-// local problem data
-export type Problem = {
-  id: string;
-  title: string;
-  problemStatement: string;
-  examples: Example[];
-  constraints: string;
-  order: number;
-  starterCode: string;
   handlerFunction: (
     fn: any,
     input: any,
-    inputCount: number,
     output: any,
-    testCasesCount: number
+    inputCount?: number,
+    testCasesCount?: number
   ) => TestResult;
   starterFunctionName: string;
 };
 
-type TestResult = {
+export type TestResult = {
   success: boolean;
   message: string;
 };
