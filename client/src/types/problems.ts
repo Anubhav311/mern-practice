@@ -10,6 +10,7 @@ export type DBProblems = {
   link?: string;
   boilerPlate: string;
   problemStatement: string;
+  examples: Example[];
 };
 
 export type Example = {
