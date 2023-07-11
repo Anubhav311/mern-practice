@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSetting } from "react-icons/ai";
 import Split from "react-split";
 import CodeMirror from "@uiw/react-codemirror";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeEditorFooter from "./CodeEditorFooter";
-import { DBProblems, Problem as localProblem } from "../types/problems";
+import {
+  DBProblems,
+  TestCase,
+  Problem as localProblem,
+} from "../types/problems";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 import { problems } from "../problems/index";
+import { doc, getDoc } from "firebase/firestore";
+import { firestore } from "../firebase/firebase";
 
 interface ICodeAreaProps {
   problem: DBProblems | null;
@@ -21,7 +27,20 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
 }) => {
   const [userCode, setUserCode] = React.useState<string>("");
   const [user] = useAuthState(auth);
+  const { testCases, loadingTest } = useGetTestCases("testcaseId");
+  console.log(!loadingTest && testCases?.input);
+  const nums = [
+    [7, 2, 3, 4],
+    [3, 2, 4],
+    [3, 3],
+  ];
 
+  const targets = [9, 6, 6];
+  const answers = [
+    [0, 1],
+    [1, 2],
+    [0, 1],
+  ];
   const handleSubmit = () => {
     if (!user) {
       alert("Please login first");
@@ -32,7 +51,11 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
         userCode.indexOf(problems[problem?.id as string].starterFunctionName)
       );
       const cb = new Function(`return ${sanitisedCode}`)();
-      const success = problems[problem?.id as string].handlerFunction(cb);
+      const success = problems[problem?.id as string].handlerFunction(
+        cb,
+        [testCases?.input[0], testCases?.input[1]],
+        testCases?.output
+      );
 
       if (success) {
         alert("Congrats!!! All tests passed!!!");
@@ -119,4 +142,35 @@ const PreferenceNav: React.FunctionComponent<IPreferenceNavProps> = (props) => {
   );
 };
 
-PreferenceNav;
+function useGetTestCases(testCaseId: string) {
+  const [testCases, setTestCases] = useState<TestCase | null>(null);
+  const [loadingTest, setLoading] = useState<boolean>(true);
+  // const [problemDifficultyClass, setProblemDifficultyClass] =
+  //   useState<string>("");
+
+  useEffect(() => {
+    const getProblem = async () => {
+      setLoading(true);
+
+      const docRef = doc(firestore, "testCases", "two-sum-tc1");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const testCases = docSnap.data();
+        setTestCases({ id: docSnap.id, ...testCases } as TestCase);
+
+        // setProblemDifficultyClass(
+        //   problem.difficulty == "easy"
+        //     ? "bg-olive text-olive"
+        //     : problem.difficulty == "medium"
+        //     ? "bg-dark-yellow text-dark-yellow"
+        //     : "bg-dark-pink text-dark-pink"
+        // );
+
+        setLoading(false);
+      }
+    };
+    getProblem();
+  }, [testCaseId]);
+  return { testCases, loadingTest };
+}

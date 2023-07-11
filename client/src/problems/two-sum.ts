@@ -1,9 +1,10 @@
 import assert from "assert";
+import { parse } from "postcss";
 
 export type Example = {
   id: number;
-  inputText: string;
-  outputText: string;
+  input: string;
+  output: string;
   explanation?: string;
   img?: string;
 };
@@ -16,7 +17,7 @@ export type Problem = {
   constraints: string;
   order: number;
   starterCode: string;
-  handlerFunction: (fn: any) => boolean;
+  handlerFunction: (fn: any, input: any, output: any) => boolean;
   starterFunctionName: string;
 };
 
@@ -25,25 +26,33 @@ const starterCodeTwoSum = `function twoSum(nums, target) {
 };`;
 
 // checks if the code is correct or not
-const handlerTwoSum = (fn: any) => {
+const handlerTwoSum = (fn: any, input: any, output: any) => {
   try {
-    const nums = [
-      [7, 2, 3, 4],
-      [3, 2, 4],
-      [3, 3],
-    ];
+    // const nums = [
+    //   [7, 2, 3, 4],
+    //   [3, 2, 4],
+    //   [3, 3],
+    // ];
 
-    const targets = [9, 6, 6];
-    const answers = [
-      [0, 1],
-      [1, 2],
-      [0, 1],
-    ];
+    // const targets = [9, 6, 6];
+    // const answers = [
+    //   [0, 1],
+    //   [1, 2],
+    //   [0, 1],
+    // ];
 
-    for (let i = 0; i < nums.length; i++) {
-      const result = fn(nums[i], targets[i]);
-      assert.deepStrictEqual(result, answers[i]);
-    }
+    // for (let i = 0; i < nums.length; i++) {
+    //   const result = fn(nums[i], targets[i]);
+    //   assert.deepStrictEqual(result, answers[i]);
+    // }
+    // for (let i = 0; i < nums.length; i++) {
+    const inp1 = JSON.parse(input[0]);
+    const inp2 = JSON.parse(input[1]);
+    const outp = JSON.parse(output);
+    const result = fn(inp1, inp2);
+    console.log(inp1, inp2, outp, result);
+    assert.deepStrictEqual(result, outp);
+    // }
 
     return true;
   } catch (error: any) {
@@ -72,8 +81,8 @@ export const twoSum: Problem = {
   examples: [
     {
       id: 1,
-      inputText: "nums = [2,7,11,15], target = 9",
-      outputText: "[0,1]",
+      input: "nums = [2,7,11,15], target = 9",
+      output: "[0,1]",
       explanation: "Becase num[0] + num[1] == 9, we return [0,1]",
     },
   ],

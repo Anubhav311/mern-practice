@@ -1,8 +1,5 @@
-import { firestore } from "../firebase/firebase";
-import { Problem } from "../problems/two-sum";
 import { DBProblems } from "../types/problems";
-import { doc, getDoc } from "firebase/firestore";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { BsCheck2Circle } from "react-icons/bs";
 import { TiStarOutline } from "react-icons/ti";
