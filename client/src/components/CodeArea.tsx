@@ -9,8 +9,9 @@ import { DBProblems, TestCase } from "../types/problems";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 import { problems } from "../problems/index";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
+import { Submissions } from "../types/problems";
 
 interface ICodeAreaProps {
   problem: DBProblems | null;
@@ -46,6 +47,19 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
 
       if (success.success) {
         setTestResult(success.message);
+        // submit code to submissions collection
+        const submission: Submissions = {
+          id: user.uid + problem?.id,
+          problemId: problem?.id + "",
+          userId: user.uid,
+          code: userCode,
+          createdAt: Date.now(),
+          executionTime: 0,
+          memoryUsage: 0,
+          language: "Javascript",
+          status: "Accepted",
+        };
+        addDoc(collection(firestore, "submissions"), submission);
       } else {
         setTestResult(success.message);
       }

@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type Example = {
   id: number;
   input: string;
@@ -55,4 +57,16 @@ export type SubmitHandler = {
     testCasesCount?: number
   ) => TestResult;
   starterFunctionName: string;
+};
+
+export type Submissions = {
+  id: string;
+  problemId: string;
+  userId: string;
+  code: string;
+  createdAt: number;
+  executionTime: number;
+  memoryUsage: number;
+  language: string;
+  status: "Accepted" | "Incorrect" | "Error";
 };
