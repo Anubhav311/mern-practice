@@ -1,3 +1,11 @@
+export type Example = {
+  id: number;
+  input: string;
+  output: string;
+  explanation?: string;
+  img?: string;
+};
+
 export type DBProblems = {
   id: string;
   title: string;
@@ -11,14 +19,7 @@ export type DBProblems = {
   boilerPlate: string;
   problemStatement: string;
   examples: Example[];
-};
-
-export type Example = {
-  id: number;
-  inputText: string;
-  outputText: string;
-  explanation?: string;
-  img?: string;
+  constraints: string;
 };
 
 // local problem data

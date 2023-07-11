@@ -86,26 +86,7 @@ const ProblemDescription: React.FunctionComponent<IProblemDescriptionProps> = ({
               </div>
 
               {/* Constraints */}
-              <div className="my-5">
-                <div className="text-black text-sm font-medium">
-                  Constraints:
-                </div>
-                <ul className="text-black ml-5 list-disc">
-                  <li className="mt-2">
-                    <code>2 ≤ nums.length ≤ 10</code>
-                  </li>
-
-                  <li className="mt-2">
-                    <code>-10 ≤ nums[i] ≤ 10</code>
-                  </li>
-                  <li className="mt-2">
-                    <code>-10 ≤ target ≤ 10</code>
-                  </li>
-                  <li className="mt-2 text-sm">
-                    <strong>Only one valid answer exists.</strong>
-                  </li>
-                </ul>
-              </div>
+              {parse(problem.constraints)}
             </div>
           )}
           {loading && <h1>Loading...</h1>}
