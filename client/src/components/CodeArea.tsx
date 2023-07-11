@@ -15,6 +15,7 @@ import { auth } from "../firebase/firebase";
 import { problems } from "../problems/index";
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
+import { TestResult } from "../problems/two-sum";
 
 interface ICodeAreaProps {
   problem: DBProblems | null;
@@ -28,6 +29,7 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
   const [userCode, setUserCode] = React.useState<string>("");
   const [user] = useAuthState(auth);
   const { testCases, loadingTest } = useGetTestCases("testcaseId");
+  const [testResult, setTestResult] = useState("");
 
   const handleSubmit = () => {
     if (!user) {
@@ -46,9 +48,11 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
         testCases?.output,
         testCases?.testCasesCount
       );
-
-      if (success) {
-        alert("Congrats!!! All tests passed!!!");
+      console.log("Success: ", success);
+      if (success.success) {
+        setTestResult(success.message);
+      } else {
+        setTestResult(success.message);
       }
     } catch (error) {
       console.log(error);
@@ -90,10 +94,10 @@ const CodeArea: React.FunctionComponent<ICodeAreaProps> = ({
         <div className="w-full px-5 overflow-auto">
           <div className="flex h-10 items-center space-x-6">
             <div className="relative flex h-full flex-col justify-center cursor-pointer">
-              <div className="text-sm font-medium leading-5">Test Cases</div>
+              <div className="text-sm font-medium leading-5">Test Results</div>
             </div>
           </div>
-
+          {testResult}
           <div className="flex">
             <div className="mr-2 "></div>
           </div>

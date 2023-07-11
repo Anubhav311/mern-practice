@@ -1,5 +1,4 @@
 import assert from "assert";
-import { parse } from "postcss";
 
 export type Example = {
   id: number;
@@ -23,13 +22,18 @@ export type Problem = {
     inputCount: number,
     output: any,
     testCasesCount: number
-  ) => boolean;
+  ) => TestResult;
   starterFunctionName: string;
 };
 
 const starterCodeTwoSum = `function twoSum(nums, target) {
     // write your code here
 };`;
+
+export type TestResult = {
+  success: boolean;
+  message: string;
+};
 
 // checks if the code is correct or not
 const handlerTwoSum = (
@@ -38,23 +42,27 @@ const handlerTwoSum = (
   inputCount: number,
   output: any,
   testCasesCount: number
-) => {
+): TestResult => {
   try {
     for (let i = 0; i < testCasesCount; i++) {
-      const inputIndex1 = i * inputCount;
+      const inputIndex = i * inputCount;
 
-      const inp1 = JSON.parse(input[inputIndex1]);
-      const inp2 = JSON.parse(input[inputIndex1 + 1]);
+      const inp1 = JSON.parse(input[inputIndex]);
+      const inp2 = JSON.parse(input[inputIndex + 1]);
       const outp = JSON.parse(output[i]);
 
+      const errorMessage = `Test failed with the following input: ${
+        inp1[inputIndex]
+      }, ${inp1[inputIndex + 1]}`;
+
       const result = fn(inp1, inp2);
-      assert.deepStrictEqual(result, outp);
+      assert.deepStrictEqual(result, outp, errorMessage);
     }
 
-    return true;
+    return { success: true, message: "All Tests Passed" } as TestResult;
   } catch (error: any) {
-    console.log("twoSum handler function error");
-    throw new Error(error);
+    console.log("Error: ", error.message);
+    return { success: false, message: error.message } as TestResult;
   }
 };
 

@@ -37,8 +37,13 @@ export type Problem = {
     inputCount: number,
     output: any,
     testCasesCount: number
-  ) => boolean;
+  ) => TestResult;
   starterFunctionName: string;
+};
+
+type TestResult = {
+  success: boolean;
+  message: string;
 };
 
 export type TestCase = {
